@@ -1,0 +1,59 @@
+.card-pizza {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    width: 25%;
+  }
+  
+  .card-pizza:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-pizza-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .card-pizza-name {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+  
+  .card-pizza-ingredients {
+    color: #555;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .card-pizza-price {
+    color: green;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .card-pizza-button {
+    background-color: #f8b400;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .card-pizza-button:hover {
+    background-color: #e6a200;
+  }
+  ul{
+    list-style-type: none;
+    display: flex;
+    gap: 10px;
+    
+  }
+  
