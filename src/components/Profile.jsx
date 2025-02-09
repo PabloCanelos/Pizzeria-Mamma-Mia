@@ -10,4 +10,3 @@ const Profile = () => {
 }
 
 export default Profile
-console.log(Profile)
