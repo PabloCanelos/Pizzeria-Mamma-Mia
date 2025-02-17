@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { CartContext } from '../context/CartContext.jsx' // Importar CartContext
 
 const Home = () => {
+  const { agregarAlCarrito } = useContext(CartContext)// Usar useContext para obtener addToCart
   const [pizzas, setPizzas] = useState([])
   const [error, setError] = useState(null)
 
@@ -9,9 +11,9 @@ const Home = () => {
       try {
         const response = await fetch('http://localhost:5000/api/pizzas')
         if (!response.ok) {
-          throw new Error('Respuesta de red no fue correcta')
+          console.error('Respuesta de red no fue correcta')
         }
-        const data = await response.json()
+       const data = await response.json()
         setPizzas(data)
       } catch (error) {
         setError(error.message)
@@ -37,7 +39,7 @@ const Home = () => {
             <p>Ingredientes: {pizza.ingredients.join(', ')}</p>
             <img src={pizza.img} alt={pizza.name} />
             <p>{pizza.desc}</p>
-            <button>Añadir al carrito</button>
+            <button onClick={() => agregarAlCarrito(pizza)}>Añadir al carrito</button> {/* Usar addToCart */}
           </div>
         ))}
       </div>
@@ -45,8 +47,7 @@ const Home = () => {
   )
 }
 
-export default Home
-
+export default Home 
 { /* const Home = () => {
   console.log(pizzas) 
   return (

@@ -1,8 +1,10 @@
 import './Navbar.css'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext.jsx'
 
 const Navbar = () => {
-  const total = 25000
+  const { montoTotal } = useContext(CartContext)
   const token = false
 
   return (
@@ -15,7 +17,6 @@ const Navbar = () => {
           </Link>
         </li>
         {token ? ( 
-          // ? abreviacion ternaria if/else, si el token es falso se renderiza despues de los dos :
           <>
             <li className='navbar-item'>
               <Link to='/profile'>
@@ -25,7 +26,6 @@ const Navbar = () => {
             <li className='navbar-item'><button>Logout</button></li>
           </>
         ) : (
-          // este contenido se renderizara si el token es false
           <>
             <li className='navbar-item'>
               <Link to='/login'>
@@ -41,7 +41,7 @@ const Navbar = () => {
         )}
         <li className='navbar-item'>
           <Link to='/cart'>
-            <button>Total: ${total.toLocaleString()}</button> 
+            <button>Total: ${ montoTotal ? montoTotal.toLocaleString() : 0 }</button> 
           </Link>
         </li>
       </ul>
