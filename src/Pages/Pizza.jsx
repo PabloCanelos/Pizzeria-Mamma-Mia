@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 const Pizza = () => {
   const [pizza, setPizza] = useState(null)
   const [error, setError] = useState(null)
+  const { id } = useParams()
 
   useEffect(() => {
     const fetchPizza = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/pizzas/p001')
+        const response = await fetch(`http://localhost:5000/api/pizzas/${id}`)
+        // const response = await fetch('http://localhost:5000/api/pizzas/p001')
         if (!response.ok) {
           throw new Error('Respuesta de red no fue correcta')
         }
@@ -20,7 +23,7 @@ const Pizza = () => {
     }
 
     fetchPizza()
-  }, [])
+  }, [id])
 
   if (error) {
     return <div>Error: {error}</div>

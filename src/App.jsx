@@ -9,10 +9,11 @@ import Pizza from './Pages/Pizza'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import NotFound from './components/NotFound'
+import { UserProvider } from './context/UserContext'
 
 const App = () => {
   return (
-    <>
+    <UserProvider>
       <Router>
         <Navbar /> 
         <Routes>
@@ -26,7 +27,7 @@ const App = () => {
         </Routes>
         <Footer />
       </Router>
-    </> 
+    </UserProvider>
   )
 }
 export default App
