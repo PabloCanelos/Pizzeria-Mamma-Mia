@@ -1,11 +1,40 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import axios from 'axios'
 import { CartContext } from '../context/CartContext'
 import { UserContext } from '../context/UserContext'
 import '../components/Cart.css'
 
 const Cart = () => {
   const { carrito, actualizarCantidad, eliminarDelCarrito, montoTotal } = useContext(CartContext)
-  const { token } = useContext(UserContext)
+  const { user } = useContext(UserContext)
+  const [successMessage, setSuccessMessage] = useState('')
+
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/checkouts', {
+        cart: carrito
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        }
+      })
+
+      if (response.status === 200) {
+        console.log('Compra exitosa:', response.data)
+        setSuccessMessage('¡Compra completada con éxito!')
+      } else {
+        console.error('Error en la compra:', response.statusText)
+      }
+    } catch (error) {
+      console.error('Error durante la compra:', error)
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    handleCheckout()
+  }
 
   return (
     <div className='cart'>
@@ -21,7 +50,8 @@ const Cart = () => {
         ))}
       </ul>
       <h3 className='totalPagar'>Total: ${montoTotal.toLocaleString()}</h3>
-      <button className='btnPagar' disabled={!token} >Pagar</button>
+      <button className='btnPagar' onClick={handleSubmit} disabled={!user.token}>Pagar</button>
+      {successMessage && <p>{successMessage}</p>}
     </div>
   )
 }

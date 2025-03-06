@@ -1,28 +1,64 @@
-import React, { useState } from 'react'
-import '../assets/style.css' 
+import React, { useState, useContext } from 'react'
+import '../assets/style.css'
+import { UserContext } from '../context/UserContext'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { login } = useContext(UserContext)
+  const [formData, setFormData] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
 
-  const handleEmailChange = (e) => setEmail(e.target.value)
-  const handlePasswordChange = (e) => setPassword(e.target.value)
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (password.length < 6) {
-      alert('La contraseña debe tener al menos 6 caracteres')
-    } else {
-      alert('Inicio de sesión exitoso')
+
+    if (!formData.email || !formData.password) {
+      setError('Por favor, completa todos los campos.')
+      return
+    }
+
+    setError('')
+    try {
+      await login(formData.email, formData.password)
+    } catch (error) {
+      setError('Error al iniciar sesión, por favor verifica tus credenciales.')
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type='email' placeholder='Email' value={email} onChange={handleEmailChange} required />
-      <input type='password' placeholder='Contraseña' value={password} onChange={handlePasswordChange} required />
-      <button type='submit'>Login</button>
-    </form>
+    <div className='login-container'>
+      <form onSubmit={handleSubmit} className='login-form'>
+        <h2 className='login-title'>Iniciar Sesión</h2>
+        {error && <div className='login-error'>{error}</div>}
+        <div className='login-field'>
+          <label htmlFor='email' className='login-label'>Correo Electrónico</label>
+          <input
+            type='email'
+            id='email'
+            name='email'
+            value={formData.email}
+            onChange={handleChange}
+            className='login-input'
+            placeholder='Ingresa tu correo'
+          />
+        </div>
+        <div className='login-field'>
+          <label htmlFor='password' className='login-label'>Contraseña</label>
+          <input
+            type='password'
+            id='password'
+            name='password'
+            value={formData.password}
+            onChange={handleChange}
+            className='login-input'
+            placeholder='Ingresa tu contraseña'
+          />
+        </div>
+        <button type='submit' className='login-button'>Iniciar Sesión</button>
+      </form>
+    </div>
   )
 }
 

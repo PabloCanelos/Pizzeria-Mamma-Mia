@@ -18,15 +18,15 @@ const Navbar = () => {
             <button>Home</button>
           </Link>
         </li>
-        {token ? ( 
+        {token ?(
           <>
             <li className='navbar-item'>
-              <Link to='/profile'> 
+              <Link to='/profile'>
                 <button>Profile</button>
               </Link>
             </li>
             <li className='navbar-item'>
-              <button onClick={logout}>Logout</button> 
+              <button onClick={logout}>Logout</button>
             </li>
           </>
         ) : (
@@ -45,7 +45,7 @@ const Navbar = () => {
         )}
         <li className='navbar-item'>
           <Link to='/cart'>
-            <button>Total: ${ montoTotal ? montoTotal.toLocaleString() : 0 }</button> 
+            <button>Total: ${ montoTotal ? montoTotal.toLocaleString() : 0 }</button>
           </Link>
         </li>
       </ul>
